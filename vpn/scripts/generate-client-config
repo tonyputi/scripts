@@ -1,0 +1,37 @@
+#!/bin/bash
+
+GROUP="${1:-IF4U}"
+#TMPDIR=$(mktemp -d -t $GROUP.XXXXXXXX)
+
+function get_last_ip4addr(){
+	sed -n '$p' $GROUP/address.db | awk '{print $1}'
+}
+
+function get_last_name(){
+	sed -n '$p' $GROUP/address.db | awk '{print $2}'
+}
+
+function get_next_ip4addr(){
+	local ipaddr=$(get_last_ip4addr)
+	local base="$(echo $ipaddr | cut -d. -f1-3)"
+	local last="$(echo $ipaddr | cut -d. -f4)"
+
+	if [ $last -eq 255 ]; then
+		echo "IPv4 Address poll full. Think to buy another interface"
+		exit 1
+	fi
+	
+	echo $base.$(($last + 1))
+}
+
+function generate_uuid(){
+
+}
+
+CUSTOMER_NAME=$2
+CUSTOMER_IP4ADDR=$(get_next_ip4addr)
+
+echo $CUSTOMER_IP4ADDR ${CUSTOMER_NAME,,}
+
+#cp -a $GROUP/template/* $TMPDIR
+#rm -rf $TMPDIR

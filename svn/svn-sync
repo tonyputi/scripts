@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#mkdir /var/lib/svn/nomadnt/
+svnadmin create /var/lib/svn/nomadnt/ndk
+cd /var/lib/svn/nomadnt/ndk/hooks
+head -n 1 pre-revprop-change.tmpl > pre-revprop-change
+chmod +x pre-revprop-change
+cd ~
+svnsync init file:///var/lib/svn/nomadnt/ndk svn://svn.openwrt.org/openwrt/branches/attitude_adjustment

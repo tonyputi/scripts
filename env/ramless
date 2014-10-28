@@ -1,0 +1,12 @@
+#!/bin/bash
+
+[ -e /var/swap.1 ] || {
+	dd if=/dev/zero of=/var/swap.1 bs=1M count=512
+	mkswap -c /var/swap.1
+	chmod -v 600 /var/swap.1
+}
+
+case "$1" in
+	"on") swapon /var/swap.1 ;;
+	"off") swapoff /var/swap.1 ;;
+esac

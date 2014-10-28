@@ -1,0 +1,8 @@
+#!/bin/bash
+
+USER=$1
+
+sudo useradd -d /home/$USER -s /bin/bash -m $USER
+sudo mkdir -p /home/$USER/public_html/log
+sudo chown www-data.www-data /home/$USER/public_html/log
+
